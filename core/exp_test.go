@@ -35,30 +35,30 @@ var addTests = []TestExpression{
 		"1+3+2+4",
 		10,
 	},
-	////(1+2)*(3+4)=21
-	//TestExpression{
-	//	ExpressionFactory([]int{1,2,3,4}, []string{"+", "*", "+"}, [][2]int{[2]int{1, 0}, [2]int{0, 1}, [2]int{1, 0}, [2]int{0, 1}}),
-	//	"(1+2)*(3+4)",
-	//	21,
-	//},
-	////1+2*3+4=11
-	//TestExpression{
-	//	ExpressionFactory([]int{1,2,3,4}, []string{"+", "*", "+"}, [][2]int{[2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}}),
-	//	"1+2*3+4",
-	//	11,
-	//},
-	////4-2+18/9*11+9/3
-	//TestExpression{
-	//	ExpressionFactory([]int{4,2,18,9,11,9,3}, []string{"-", "+", "/", "*", "+", "/"}, [][2]int{[2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}}),
-	//	"4-2+18/9*11+9/3",
-	//	27,
-	//},
+	//(1+2)*(3+4)=21
+	TestExpression{
+		ExpressionFactory([]int{1,2,3,4}, []string{"+", "*", "+"}, [][2]int{[2]int{1, 0}, [2]int{0, 1}, [2]int{1, 0}, [2]int{0, 1}}),
+		"(1+2)*(3+4)",
+		21,
+	},
+	//1+2*3+4=11
+	TestExpression{
+		ExpressionFactory([]int{1,2,3,4}, []string{"+", "*", "+"}, [][2]int{[2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}}),
+		"1+2*3+4",
+		11,
+	},
+	//4-2+18/9*11+9/3
+	TestExpression{
+		ExpressionFactory([]int{4,2,18,9,11,9,3}, []string{"-", "+", "/", "*", "+", "/"}, [][2]int{[2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}}),
+		"4-2+18/9*11+9/3",
+		27,
+	},
 	//4-(2+18/9*11)+9/3
-	//TestExpression{
-	//	ExpressionFactory([]int{4,2,18,9,11,9,3}, []string{"-", "+", "/", "*", "+", "/"}, [][2]int{[2]int{0, 0}, [2]int{1, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 1}, [2]int{0, 0}, [2]int{0, 0}}),
-	//	"4-(2+18/9*11)+9/3",
-	//	-17,
-	//},
+	TestExpression{
+		ExpressionFactory([]int{4,2,18,9,11,9,3}, []string{"-", "+", "/", "*", "+", "/"}, [][2]int{[2]int{0, 0}, [2]int{1, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 1}, [2]int{0, 0}, [2]int{0, 0}}),
+		"4-(2+18/9*11)+9/3",
+		-17,
+	},
 }
 
 func TestExpString(t *testing.T) {

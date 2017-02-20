@@ -76,17 +76,27 @@ func (this *Point24)AddKuoHao(inputNums []int, operations []string, parenthesis 
 			copy(parenthesisCopy, parenthesis)
 			//右边部分
 			if i+1 < end{
-				//加左括号
-				parenthesisCopy[i+1][0] += 1
-				//加右括号
-				parenthesisCopy[end][1] += 1
+				if i + 2 == end && (operations[i] == "+" || operations[i] == "-" || parenthesisCopy[i+1][0] > 0) &&
+					(operations[i+1] == "*" || operations[i+1] == "/"){
+					//* /不需要加括号
+				}else{
+					//加左括号
+					parenthesisCopy[i+1][0] += 1
+					//加右括号
+					parenthesisCopy[end][1] += 1
+				}
 			}
 			//左边部分
 			if i > start{
-				//加左括号
-				parenthesisCopy[start][0] += 1
-				//加右括号
-				parenthesisCopy[i][1] += 1
+				if start + 1 == i && (start == 0|| (start > 0 && (parenthesisCopy[start][0] > 0 || operations[start - 1] == "+" || operations[start - 1] == "-"))) &&
+					(operations[start] == "*" || operations[start] == "/"){
+					//* /不需要加括号
+				}else{
+					//加左括号
+					parenthesisCopy[start][0] += 1
+					//加右括号
+					parenthesisCopy[i][1] += 1
+				}
 			}
 			//递归加括号
 			this.AddKuoHao(inputNums, operations, parenthesisCopy, start, i)
