@@ -28,7 +28,10 @@ func NewExpression(optNumbers []int, operators []string, parenthesis [][2]int) (
 		//其他检查
 		return nil, errors.New("参数有误")
 	}else{
-		return &Expression{optNumbers, operators, parenthesis}, nil
+		exp := Expression{optNumbers, operators, parenthesis}
+		//归一化处理，统一成一种风格
+		exp.Normalization()
+		return &exp, nil
 	}
 }
 
@@ -224,6 +227,53 @@ func (this *Expression)Calc(optD1, optD2 int, opt string) int{
 	}
 	return r
 }
+
+/*
+归一化处理方便后面比较表达式（暂时只支持四个操作数）
+所有可以结合的*+运算操作数按照从小到大的顺序排列
+*/
+func (this *Expression)Normalization(){
+	for i, v := range this.operators{
+		if i == 0 {
+			if v == "*"{
+				if this.parenthesis[i + 1][0] == 0{
+					//第二个操作符没有左括号, 可以调换位置
+					if this.optNumbers[i] > this.optNumbers[i + 1] {
+						//交换
+						this.optNumbers[i], this.optNumbers[i + 1] = this.optNumbers[i + 1], this.optNumbers[i]
+					}
+				}
+			}else if v == "+" {
+				if (this.parenthesis[i + 1][0] == 0 && (this.operators[i+1] == "+" || this.operators[i+1] == "-")) ||
+					(this.parenthesis[i + 1][1] > 0){
+					//第二个操作符没有左括号并且第二个操作符是+ 或者-, 可以调换位置
+					if this.optNumbers[i] > this.optNumbers[i + 1] {
+						//交换
+						this.optNumbers[i], this.optNumbers[i + 1] = this.optNumbers[i + 1], this.optNumbers[i]
+					}
+				}
+			}
+		}else if i == 1 {
+			if this.parenthesis[i][0] > 0 && this.parenthesis[i+1][1] > 0 && (v == "*" || v == "+"){
+				if this.optNumbers[i] > this.optNumbers[i + 1] {
+					//交换
+					this.optNumbers[i], this.optNumbers[i + 1] = this.optNumbers[i + 1], this.optNumbers[i]
+				}
+			}
+		}else if i == 2 {
+			if (this.parenthesis[i][1] == 0 && (this.operators[i - 1] == "+" || this.operators[i - 1] == "-") && (v == "*" || v == "+")) ||
+				(this.parenthesis[i][0] > 0 && (this.operators[i - 1] == "*" || this.operators[i] == "+")){
+				//左边的操作数没有右括号，并且左边的操作符是+ -
+				//或者左边操作数有左括号，并且左边的操作符是+ *
+				if this.optNumbers[i] > this.optNumbers[i + 1] {
+					//交换
+					this.optNumbers[i], this.optNumbers[i + 1] = this.optNumbers[i + 1], this.optNumbers[i]
+				}
+			}
+		}
+	}
+}
+
 
 /*
 求取表达式相似度

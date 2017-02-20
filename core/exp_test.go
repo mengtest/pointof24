@@ -59,12 +59,19 @@ var addTests = []TestExpression{
 		"4-(2+18/9*11)+9/3",
 		-17,
 	},
+	//2*6+6*2=24
+	TestExpression{
+		ExpressionFactory([]int{2,6,6,2}, []string{"*", "+", "*"}, [][2]int{[2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}, [2]int{0, 0}}),
+		"2*6+2*6",
+		24,
+	},
 }
 
 func TestExpString(t *testing.T) {
 	for _,v := range addTests {
 		if v.Exp.String() != v.ExpStr {
 			t.Error("TestExpString Error!!!!")
+			t.Error(v.Exp.String())
 			t.Fail()
 		}
 	}

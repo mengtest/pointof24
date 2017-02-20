@@ -52,7 +52,10 @@ func (this *Point24)CalcAll(){
 */
 func (this *Point24)AddKuoHao(inputNums []int, operations []string, parenthesis [][2]int, start, end int){
 	//计算表达式的值
-	expObj, err := NewExpression(inputNums, operations, parenthesis)
+	//这里拷贝是因为表达式归一化处理会改变操作数的顺序
+	inputNumsCopy := make([]int, len(inputNums))
+	copy(inputNumsCopy, inputNums)
+	expObj, err := NewExpression(inputNumsCopy, operations, parenthesis)
 	if err == nil{
 		v, _ := expObj.Value()
 		if v == this.result{
