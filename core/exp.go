@@ -240,43 +240,50 @@ func (this *Expression)Equal(exp *Expression) bool{
 		//过滤(6+6/3)*3=24 3*(6+6/3)=24
 		s1Arr := strings.Split(s1, "*")
 		s2Arr := strings.Split(s2, "*")
-		sort.Strings(s1Arr)
-		sort.Strings(s2Arr)
-		s1ArrIndexMax := len(s1Arr) - 1
-		LOOP1:
-		for i, e := range s1Arr{
-			if e != s2Arr[i]{
-				//加号
-				if strings.Index(e, "+") > -1{
-					var s1ArrI []string
-					var s2ArrI []string
-					if string(e[0]) == "(" && string(s2Arr[i][0]) == "("{
-						s1ArrI = strings.Split(e[1:len(e) - 1], "+")
-						s2ArrI = strings.Split(s2Arr[i][1: len(s2Arr[i]) - 1], "+")
-					}else{
-						s1ArrI = strings.Split(e, "+")
-						s2ArrI = strings.Split(s2Arr[i], "+")
-					}
 
-					sort.Strings(s1ArrI)
-					sort.Strings(s2ArrI)
-					s1ArrIIndexMax := len(s1ArrI) - 1
-					for ii, ei := range s1ArrI{
-						if ei != s2ArrI[ii]{
-							break LOOP1
+		if len(s1Arr) == len(s2Arr){
+			sort.Strings(s1Arr)
+			sort.Strings(s2Arr)
+			s1ArrIndexMax := len(s1Arr) - 1
+			LOOP1:
+			for i, e := range s1Arr{
+				if e != s2Arr[i]{
+					//加号
+					if strings.Index(e, "+") > -1{
+						var s1ArrI []string
+						var s2ArrI []string
+						if string(e[0]) == "(" && string(s2Arr[i][0]) == "("{
+							s1ArrI = strings.Split(e[1:len(e) - 1], "+")
+							s2ArrI = strings.Split(s2Arr[i][1: len(s2Arr[i]) - 1], "+")
 						}else{
-							if ii == s1ArrIIndexMax{
-								continue LOOP1
-							}
+							s1ArrI = strings.Split(e, "+")
+							s2ArrI = strings.Split(s2Arr[i], "+")
 						}
-					}
-				}else {
-					break
-				}
 
-			}
-			if i == s1ArrIndexMax{
-				return true
+						if len(s1ArrI) == len(s2ArrI){
+							sort.Strings(s1ArrI)
+							sort.Strings(s2ArrI)
+							s1ArrIIndexMax := len(s1ArrI) - 1
+							for ii, ei := range s1ArrI{
+								if ei != s2ArrI[ii]{
+									break LOOP1
+								}else{
+									if ii == s1ArrIIndexMax{
+										continue LOOP1
+									}
+								}
+							}
+						}else{
+							break
+						}
+					}else {
+						break
+					}
+
+				}
+				if i == s1ArrIndexMax{
+					return true
+				}
 			}
 		}
 

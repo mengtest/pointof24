@@ -54,7 +54,6 @@ func (this *Point24)AddKuoHao(inputNums []int, operations []string, parenthesis 
 	//计算表达式的值
 	expObj, err := NewExpression(inputNums, operations, parenthesis)
 	if err == nil{
-		//fmt.Println(expObj.String())
 		v, _ := expObj.Value()
 		if v == this.result{
 			//this.stored = append(this.stored, expObj)
