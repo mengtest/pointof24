@@ -233,6 +233,9 @@ func (this *Expression)Calc(optD1, optD2 int, opt string) int{
 所有可以结合的*+运算操作数按照从小到大的顺序排列
 */
 func (this *Expression)Normalization(){
+	if len(this.optNumbers) != 4{
+		return
+	}
 	for i, v := range this.operators{
 		if i == 0 {
 			if v == "*"{

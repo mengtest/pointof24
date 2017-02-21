@@ -21,5 +21,6 @@ func TestInputAtoi(t *testing.T) {
 func TestCalcAll(t *testing.T) {
 	for _,v := range allTests {
 		v.CalcAll()
+		//v.Display()
 	}
 }
