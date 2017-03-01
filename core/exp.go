@@ -263,6 +263,17 @@ func (this *Expression)Normalization(){
 					this.optNumbers[i], this.optNumbers[i + 1] = this.optNumbers[i + 1], this.optNumbers[i]
 				}
 			}
+
+			if v == "*" && (this.parenthesis[i][1] > 0 && this.parenthesis[i+1][1] > 0){
+				//操作数
+				this.optNumbers[0], this.optNumbers[1], this.optNumbers[2] = this.optNumbers[2], this.optNumbers[0], this.optNumbers[1]
+				//操作符
+				this.operators[0], this.operators[1] = this.operators[1], this.operators[0]
+				//括号
+				this.parenthesis[0][0], this.parenthesis[0][1] = 1, 0
+				this.parenthesis[1][0], this.parenthesis[1][1] = 1, 0
+				this.parenthesis[2][0], this.parenthesis[2][1] = 0, 2
+			}
 		}else if i == 2 {
 			if (this.parenthesis[i][1] == 0 && (this.operators[i - 1] == "+" || this.operators[i - 1] == "-") && (v == "*" || v == "+")) ||
 				(this.parenthesis[i][0] > 0 && (this.operators[i - 1] == "*" || this.operators[i] == "+")){
